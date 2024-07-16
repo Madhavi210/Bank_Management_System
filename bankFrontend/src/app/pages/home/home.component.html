@@ -1,0 +1,39 @@
+
+<!-- <app-navbar></app-navbar> -->
+
+<app-sidebar></app-sidebar>
+
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-4 mb-2">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <h5 class="card-title">Start Quiz</h5>
+            <p class="card-text">Begin your quiz now and test your knowledge!</p>
+            <button class="btn btn-primary" >Start Quiz</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-2">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <h5 class="card-title">Results</h5>
+            <p class="card-text">Check your quiz results and see how well you did!</p>
+            <button class="btn btn-success" (click)="viewResults()">View Results</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-2">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <h5 class="card-title">History</h5>
+            <p class="card-text">Review your past quizzes and performances!</p>
+            <button class="btn btn-info" (click)="viewHistory()">Quiz History</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  
