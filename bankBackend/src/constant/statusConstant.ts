@@ -36,6 +36,12 @@ const StatusConstants = {
             message: 'Requested resource not found.',
         },
     },
+    INSUFFICIENT_FUNDS: {
+        httpStatusCode: 400,
+        body: {
+            code: 'Insufficient_funds',
+             message: 'Insufficient funds' }
+      },
     RESOURCE_ALREADY_EXISTS: {
         httpStatusCode: StatusCode.CONFLICT,
         body: {
