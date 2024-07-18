@@ -101,3 +101,4 @@ export default class UserService {
         return { id: String(user._id), role: String(user.role), token };
     }
 }
+

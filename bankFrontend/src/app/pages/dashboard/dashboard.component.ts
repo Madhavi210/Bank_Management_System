@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user/user.service';
-import { Chart } from 'chart.js/auto';
+import Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-dashboard',

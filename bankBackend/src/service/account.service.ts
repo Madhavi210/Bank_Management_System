@@ -7,14 +7,25 @@ import StatusConstants from '../constant/statusConstant';
 export default class AccountService {
   public static async createAccount(
     userId: string,
+    accountNumber: string,
     accountType: 'savings' | 'checking',
-    initialBalance: number,
-    session: ClientSession
+    balance: number,
+    session: ClientSession 
   ): Promise<IAccount> {
+    const existingAccount = await Account.findOne({ accountNumber }).session(session);
+    if (existingAccount) {
+      throw new AppError(
+        StatusConstants.DUPLICATE_KEY_VALUE.body.message,
+        StatusConstants.DUPLICATE_KEY_VALUE.httpStatusCode
+      );
+    }
+
     const newAccount = new Account({
       userId,
+      accountNumber,
       accountType,
-      balance: initialBalance,
+      balance, // Initial balance
+      transactions: [],
     });
 
     await newAccount.save({ session });
@@ -25,22 +36,18 @@ export default class AccountService {
     return Account.findById(id).exec();
   }
 
-  public static async getAllAccounts(): Promise<{ accounts: IAccount[], totalAccount: number }> {
+  public static async getAllAccounts(): Promise<{ accounts: IAccount[], totalAccounts: number }> {
     const accounts = await Account.find().exec();
-    const totalAccount = await Account.countDocuments().exec();
-    return { accounts, totalAccount };
+    const totalAccounts = await Account.countDocuments().exec();
+    return { accounts, totalAccounts };
   }
 
-  public static async updateAccountBalance(
-    accountId: string,
-    amount: number,
+  public static async updateAccount(
+    id: string,
+    updates: Partial<IAccount>,
     session: ClientSession
   ): Promise<IAccount | null> {
-    const account = await Account.findByIdAndUpdate(
-      accountId,
-      { $inc: { balance: amount } },
-      { new: true, session }
-    ).exec();
+    const account = await Account.findByIdAndUpdate(id, updates, { new: true, session }).exec();
     if (!account) {
       throw new AppError(
         StatusConstants.NOT_FOUND.body.message,
@@ -60,3 +67,4 @@ export default class AccountService {
     }
   }
 }
+

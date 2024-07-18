@@ -1,5 +1,5 @@
-
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+import { SchemaTypes } from 'mongoose';
 import IAccount from '../interface/account.interface';
 
 const accountSchema = new Schema<IAccount>(
@@ -8,6 +8,11 @@ const accountSchema = new Schema<IAccount>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    accountNumber: {
+      type: String,
+      required: true,
+      unique: true,
     },
     accountType: {
       type: String,
@@ -18,7 +23,13 @@ const accountSchema = new Schema<IAccount>(
       type: Number,
       required: true,
       default: 0,
-    }
+    },
+    transactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+      },
+    ],
   },
   { timestamps: true }
 );

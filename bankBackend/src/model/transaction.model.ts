@@ -1,7 +1,8 @@
+import { Schema, model, Document } from 'mongoose';
+import { SchemaTypes } from 'mongoose';
+import ITransaction from '../interface/transaction.interface';
 
-import { Schema, model } from 'mongoose';
-import ITransfer from '../interface/transaction.interface';
-const transferSchema = new Schema<ITransfer>(
+const transactionSchema = new Schema<ITransaction>(
   {
     senderAccountId: {
       type: Schema.Types.ObjectId,
@@ -17,12 +18,16 @@ const transferSchema = new Schema<ITransfer>(
       type: Number,
       required: true,
     },
+    type: {
+      type: String,
+      enum: ['credit', 'debit', 'transfer'],
+      required: true,
+    },
     description: {
       type: String,
-      default: null,
-    }
+    },
   },
   { timestamps: true }
 );
 
-export const Transfer = model<ITransfer>('Transfer', transferSchema);
+export const Transaction = model<ITransaction>('Transaction', transactionSchema);
